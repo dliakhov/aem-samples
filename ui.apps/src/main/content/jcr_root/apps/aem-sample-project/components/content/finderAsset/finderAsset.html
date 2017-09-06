@@ -1,8 +1,9 @@
 <div data-sly-use.finder="com.aem.samples.core.models.AssetFinderModel">
+    <h1>${properties.title}</h1>
     <form method="get">
         <fieldset>
             <label>Search text in /content/dam</label>
-            <input name="./${finder.nameTextProperty}" type="text">
+            <input name="${finder.nameTextProperty}" type="text">
         </fieldset>
         <input type="submit">
     </form>

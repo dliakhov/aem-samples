@@ -1,11 +1,12 @@
 package com.aem.samples.core.models;
 
+import com.aem.samples.core.injector.RequestParameter;
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.request.RequestParameter;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.Via;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 
-import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 @Model(adaptables = SlingHttpServletRequest.class)
 public class AssetFinderModel {
@@ -14,20 +15,20 @@ public class AssetFinderModel {
 
     @Self
     private SlingHttpServletRequest request;
+
+    @Inject
+    @Via("resource")
+    private String searchPath;
+
+    @Inject
+    @Via("resource")
+    private String searchEngine;
+
+    @RequestParameter
     private String text;
 
     public String getNameTextProperty() {
         return NAME_TEXT_PROPERTY;
-    }
-
-    @PostConstruct
-    protected void init() {
-        RequestParameter requestParameter = request.getRequestParameter(NAME_TEXT_PROPERTY);
-        if (requestParameter == null) {
-            return;
-        }
-        String text = requestParameter.getString();
-        this.text = text;
     }
 
     public String getText() {
