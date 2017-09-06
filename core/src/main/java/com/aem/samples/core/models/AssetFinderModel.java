@@ -24,7 +24,7 @@ public class AssetFinderModel {
     @Via("resource")
     private String searchEngine;
 
-    @RequestParameter
+    @RequestParameter(optional = true)
     private String text;
 
     public String getNameTextProperty() {
