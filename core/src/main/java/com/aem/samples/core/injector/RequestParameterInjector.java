@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Type;
 
-@Component(service = RequestParameterInjector.class,
+@Component(service = Injector.class,
         property = {
             Constants.SERVICE_RANKING + "=" + Integer.MAX_VALUE
 })
