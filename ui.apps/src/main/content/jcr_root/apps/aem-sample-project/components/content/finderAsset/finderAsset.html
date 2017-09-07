@@ -8,6 +8,8 @@
         <input type="submit">
     </form>
     <div class="result">
-        <p>${finder.text}</p>
+        <ul data-sly-test="${finder.text}" data-sly-list.result="${finder.result}">
+            <li>${result}</li>
+        </ul>
     </div>
 </div>
