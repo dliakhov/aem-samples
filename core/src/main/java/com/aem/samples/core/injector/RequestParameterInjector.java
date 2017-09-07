@@ -6,7 +6,6 @@ import org.apache.sling.models.spi.DisposalCallbackRegistry;
 import org.apache.sling.models.spi.Injector;
 import org.apache.sling.models.spi.injectorspecific.AbstractInjectAnnotationProcessor2;
 import org.apache.sling.models.spi.injectorspecific.InjectAnnotationProcessor2;
-import org.apache.sling.models.spi.injectorspecific.InjectAnnotationProcessorFactory;
 import org.apache.sling.models.spi.injectorspecific.InjectAnnotationProcessorFactory2;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
@@ -45,15 +44,20 @@ public class RequestParameterInjector implements Injector, InjectAnnotationProce
             LOGGER.debug("RequestParameterInjector#getValue RequestParameter annotation is present");
             if (type instanceof Class<?>) {
                 Class<?> fieldClass = (Class<?>) type;
-                return getValue(request, fieldName, fieldClass);
+                return getValue(request, annotation, fieldName, fieldClass);
             }
         }
         LOGGER.debug("Finish RequestParameterInjector#getValue");
         return null;
     }
 
-    private Object getValue(SlingHttpServletRequest request, String fieldName, Class<?> type) {
-        String parameter = request.getParameter(fieldName);
+    private Object getValue(SlingHttpServletRequest request, RequestParameter annotation, String fieldName, Class<?> type) {
+        String parameter;
+        if (StringUtils.isNotBlank(annotation.name())) {
+            parameter = request.getParameter(annotation.name());
+        } else {
+            parameter = request.getParameter(fieldName);
+        }
         if (StringUtils.isBlank(fieldName)) {
             return null;
         }
