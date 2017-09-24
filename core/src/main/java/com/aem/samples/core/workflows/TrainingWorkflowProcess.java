@@ -20,7 +20,9 @@ public class TrainingWorkflowProcess implements WorkflowProcess {
 
     @Override
     public void execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap metaDataMap) throws WorkflowException {
-        LOGGER.info("My training workflow is working!!!");
+        LOGGER.info("Training process executed: called from the Java code");
+        LOGGER.info("Payload: " + workItem.getWorkflowData().getPayload());
+        workItem.getWorkflowData().getMetaDataMap().put("interstep.message", "Hello from step 1");
     }
 
 }
