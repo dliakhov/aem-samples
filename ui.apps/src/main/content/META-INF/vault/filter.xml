@@ -3,4 +3,5 @@
     <filter root="/apps/aem-sample-project"/>
     <filter root="/apps/sling" />
     <filter root="/etc/designs/aem-sample-project"/>
+    <filter root="/etc/workflow/dialogs/PathMoveContent"/>
 </workspaceFilter>

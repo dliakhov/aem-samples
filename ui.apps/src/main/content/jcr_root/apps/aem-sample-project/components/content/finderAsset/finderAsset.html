@@ -4,6 +4,9 @@
         <fieldset>
             <label>Search text in /content/dam</label>
             <input name="${finder.nameTextProperty}" type="text">
+            <label>Some text here from user</label>
+            <input name="./userText" type="text">
+            <input type="hidden" name="./cq:distribute" value="true">
         </fieldset>
         <input type="submit">
     </form>
@@ -11,5 +14,9 @@
         <ul data-sly-test="${finder.text}" data-sly-list.result="${finder.result}">
             <li>${result}</li>
         </ul>
+    </div>
+    <div>
+        <p>Text from user:</p>
+        <p><b>${properties.userText || "NOTHING"}</b></p>
     </div>
 </div>

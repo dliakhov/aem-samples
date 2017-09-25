@@ -3,7 +3,6 @@ package com.aem.samples.core.models;
 import com.aem.samples.core.injector.RequestParameter;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.Via;
 import org.apache.sling.models.annotations.injectorspecific.Self;
@@ -50,6 +49,8 @@ public class AssetFinderModel {
     private Resource resource;
 
     public String getNameTextProperty() {
+        String s1 = "10";
+        String s = "abce " + s1 + " ef";
         return NAME_TEXT_PROPERTY;
     }
 

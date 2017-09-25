@@ -32,7 +32,6 @@ public class RequestParameterInjector implements Injector, InjectAnnotationProce
     public Object getValue(Object adaptable, String fieldName, Type type,
                            AnnotatedElement annotatedElement,
                            DisposalCallbackRegistry disposalCallbackRegistry) {
-        LOGGER.debug("Start RequestParameterInjector#getValue");
         if (adaptable instanceof SlingHttpServletRequest) {
             LOGGER.debug("RequestParameterInjector#getValue adaptable instanceof SlingHttpServletRequest");
             SlingHttpServletRequest request = (SlingHttpServletRequest)adaptable;
@@ -47,7 +46,6 @@ public class RequestParameterInjector implements Injector, InjectAnnotationProce
                 return getValue(request, annotation, fieldName, fieldClass);
             }
         }
-        LOGGER.debug("Finish RequestParameterInjector#getValue");
         return null;
     }
 
