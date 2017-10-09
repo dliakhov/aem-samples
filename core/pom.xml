@@ -53,6 +53,10 @@
                         <Sling-Model-Packages>
                             com.aem.samples.core
                         </Sling-Model-Packages>
+                        <Sling-Initial-Content>
+                            SLING-INF/content;path:=/libs/system/config;overwrite:=true;
+                        </Sling-Initial-Content>
+                        <Bundle-SymbolicName>aem-sample-project.core</Bundle-SymbolicName>
                     </instructions>
                 </configuration>
             </plugin>

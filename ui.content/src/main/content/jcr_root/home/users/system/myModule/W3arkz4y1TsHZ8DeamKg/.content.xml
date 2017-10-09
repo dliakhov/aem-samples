@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal"
+    jcr:primaryType="rep:SystemUser"
+    jcr:uuid="958aa4c0-47c5-377d-a104-6040b80bc412"
+    rep:authorizableId="mySystemUser"
+    rep:principalName="mySystemUser"/>

@@ -2,4 +2,5 @@
 <workspaceFilter version="1.0">
     <filter root="/content/aem-sample-project"/>
     <filter root="/content/dam/aem-sample-project"/>
+    <filter root="/home/users/system/myModule" />
 </workspaceFilter>
