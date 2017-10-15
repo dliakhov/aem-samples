@@ -3,9 +3,7 @@
     <form method="get">
         <fieldset>
             <label>Search text in /content/dam</label>
-            <input name="${finder.nameTextProperty}" type="text">
-            <label>Some text here from user</label>
-            <input name="./userText" type="text">
+            <input name="${finder.nameTextProperty}" type="text" value="${finder.text}">
             <input type="hidden" name="./cq:distribute" value="true">
         </fieldset>
         <input type="submit">
@@ -17,8 +15,6 @@
     </div>
     <div>
         <p>Text from user:</p>
-        <p><b>${properties.userText || "NOTHING"}</b></p>
+        <p><b>${properties.text || "NOTHING"}</b></p>
     </div>
-</div>
-<div data-sly-use.model="com.aem.samples.core.models.ExampleModel">
 </div>

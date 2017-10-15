@@ -16,6 +16,6 @@ public @interface RequestParameter {
 
     String name() default "";
 
-    boolean optional() default true;
+    boolean optional() default false;
 
 }

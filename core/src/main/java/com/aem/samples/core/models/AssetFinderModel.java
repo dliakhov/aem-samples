@@ -1,23 +1,23 @@
 package com.aem.samples.core.models;
 
 import com.aem.samples.core.injector.RequestParameter;
+import com.aem.samples.core.search.ContentFinder;
+import com.aem.samples.core.search.impl.QueryBuilderContentFinder;
+import com.aem.samples.core.search.impl.QueryManagerContentFinder;
+import com.day.cq.search.QueryBuilder;
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.Via;
+import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.Self;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-import javax.jcr.query.Query;
-import javax.jcr.query.QueryManager;
-import javax.jcr.query.QueryResult;
-import javax.jcr.query.Row;
-import javax.jcr.query.RowIterator;
-import java.util.ArrayList;
 import java.util.List;
 
 @Model(adaptables = SlingHttpServletRequest.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
@@ -39,19 +39,24 @@ public class AssetFinderModel {
     @RequestParameter(optional = true)
     private String text;
 
-    private QueryManager queryManager;
+    @SlingObject
+    private ResourceResolver resourceResolver;
+
+    @OSGiService
+    private QueryBuilder queryBuilder;
+
+    private ContentFinder contentFinder;
 
     @PostConstruct
     private void init() throws RepositoryException {
-        queryManager = request.getResourceResolver().adaptTo(Session.class).getWorkspace().getQueryManager();
+        if (SearchEngine.QUERY_BUILDER.equals(searchEngine)) {
+            contentFinder = new QueryBuilderContentFinder(queryBuilder, resourceResolver.adaptTo(Session.class));
+        } else if (SearchEngine.QUERY_MANAGER.equals(searchEngine)) {
+            contentFinder = new QueryManagerContentFinder(resourceResolver);
+        }
     }
 
-    @Self
-    private Resource resource;
-
     public String getNameTextProperty() {
-        String s1 = "10";
-        String s = "abce " + s1 + " ef";
         return NAME_TEXT_PROPERTY;
     }
 
@@ -60,15 +65,12 @@ public class AssetFinderModel {
     }
 
     public List<String> getResult() throws RepositoryException {
-        Query query = queryManager.createQuery("SELECT * FROM [nt:base] AS s WHERE ISDESCENDANTNODE([" + searchPath + "]) AND CONTAINS(s.*, '" + text + "')", Query.JCR_SQL2);
-        QueryResult execute = query.execute();
-        RowIterator rows = execute.getRows();
-        List<String> resultList = new ArrayList<>();
-        while (rows.hasNext()) {
-            Row row = rows.nextRow();
-            resultList.add(row.getPath());
-        }
-        return resultList;
+        return contentFinder.searchByPath(searchPath, text);
+    }
+
+    private static final class SearchEngine {
+        public static final String QUERY_MANAGER = "queryManager";
+        public static final String QUERY_BUILDER = "queryBuilder";
     }
 
 }
